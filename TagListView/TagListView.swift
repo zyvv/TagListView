@@ -300,9 +300,21 @@ open class TagListView: UIView {
         return CGSize(width: frame.width, height: height)
     }
     
-    private func createNewTagView(_ title: String, icon: UIImage) -> TagView {
-        let tagView = TagView(title: title, icon: icon)
+    private func createNewTagView(_ attributedTitle: NSAttributedString, icon: UIImage?) -> TagView {
+        let tagView = TagView(attributedTitle: attributedTitle, icon: icon)
+        setupNewTagView(tagView)
         
+        return tagView
+    }
+    
+    private func createNewTagView(_ title: String, icon: UIImage?) -> TagView {
+        let tagView = TagView(title: title, icon: icon)
+        setupNewTagView(tagView)
+        
+        return tagView
+    }
+    
+    private func setupNewTagView(_ tagView: TagView) {
         tagView.textColor = textColor
         tagView.selectedTextColor = selectedTextColor
         tagView.tagBackgroundColor = tagBackgroundColor
@@ -315,6 +327,7 @@ open class TagListView: UIView {
         tagView.selectedBorderColor = selectedBorderColor
         tagView.paddingX = paddingX
         tagView.paddingY = paddingY
+        tagView.innerMargin = innerMargin
         tagView.textFont = textFont
         tagView.addTarget(self, action: #selector(tagPressed(_:)), for: .touchUpInside)
         
@@ -324,18 +337,22 @@ open class TagListView: UIView {
                 $0.isSelected = $0 == this
             }
         }
-        
-        return tagView
     }
 
     @discardableResult
-    open func addTag(_ title: String, icon: UIImage) -> TagView {
+    open func addTag(_ title: String, icon: UIImage?) -> TagView {
         defer { rearrangeViews() }
         return addTagView(createNewTagView(title, icon: icon))
     }
     
     @discardableResult
-    open func addTags(_ source: [(String, UIImage)]) -> [TagView] {
+    open func addTag(_ attributedTitle: NSAttributedString, icon: UIImage?) -> TagView {
+        defer { rearrangeViews() }
+        return addTagView(createNewTagView(attributedTitle, icon: icon))
+    }
+    
+    @discardableResult
+    open func addTags(_ source: [(String, UIImage?)]) -> [TagView] {
         return addTagViews(source.map(createNewTagView))
     }
     
@@ -357,7 +374,7 @@ open class TagListView: UIView {
     }
 
     @discardableResult
-    open func insertTag(_ title: String, icon: UIImage, at index: Int) -> TagView {
+    open func insertTag(_ title: String, icon: UIImage?, at index: Int) -> TagView {
         return insertTagView(createNewTagView(title, icon: icon), at: index)
     }
     

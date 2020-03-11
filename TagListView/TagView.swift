@@ -54,15 +54,14 @@ open class TagView: UIButton {
     }
     @IBInspectable open var paddingX: CGFloat = 2 {
         didSet {
-            titleEdgeInsets.left = paddingX + innerMargin
-            imageEdgeInsets.left = paddingX
+            setNeedsLayout()
             updateRightInsets()
         }
     }
     
-    @IBInspectable open var innerMargin: CGFloat = 5 {
+    @IBInspectable open var innerMargin: CGFloat = 2 {
         didSet {
-            titleEdgeInsets.left = paddingX + innerMargin
+            setNeedsLayout()
         }
     }
 
@@ -140,9 +139,16 @@ open class TagView: UIButton {
         setupView()
     }
     
-    public init(title: String, icon: UIImage) {
+    public init(title: String, icon: UIImage?) {
         super.init(frame: CGRect.zero)
         setTitle(title, for: UIControl.State())
+        setImage(icon, for: UIControl.State())
+        setupView()
+    }
+    
+    public init(attributedTitle: NSAttributedString, icon: UIImage?) {
+        super.init(frame: CGRect.zero)
+        setAttributedTitle(attributedTitle, for: UIControl.State())
         setImage(icon, for: UIControl.State())
         setupView()
     }
@@ -163,11 +169,18 @@ open class TagView: UIButton {
     // MARK: - layout
 
     override open var intrinsicContentSize: CGSize {
-        var size = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: textFont]) ?? CGSize.zero
+        var size: CGSize = .zero
+        if let attributedTitle = titleLabel?.attributedText {
+            size = attributedTitle.size()
+        } else {
+            size = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: textFont]) ?? CGSize.zero
+        }
         size.height = textFont.pointSize + paddingY * 2
         size.width += paddingX * 2
-        size.width += (imageView?.frame.width ?? 0)
-        size.width += innerMargin
+        if let imageWidth = imageView?.frame.width, imageWidth > 0 {
+            size.width += imageWidth
+            size.width += innerMargin
+        }
         if size.width < size.height {
             size.width = size.height
         }
@@ -180,6 +193,14 @@ open class TagView: UIButton {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if imageView?.image != nil {
+            titleEdgeInsets.left = paddingX + innerMargin
+            imageEdgeInsets.left = paddingX
+        } else {
+            titleEdgeInsets.left = paddingX
+        }
+
     }
 }
 

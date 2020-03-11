@@ -36,9 +36,6 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
                                         <real key="value" value="6"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingX">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="marginX">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
@@ -51,9 +48,6 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="removeIconLineWidth">
                                         <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="removeIconLineColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.60282023993808054" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tagBorderColor">
                                         <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,7 +62,7 @@
                                         <color key="value" red="0.97199046611785889" green="0.13802945613861084" blue="0.17296624183654785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="innerMargin">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="12"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
